@@ -29,12 +29,21 @@ from predict import main as run_ccgnet_prediction
 
 RDLogger.DisableLog('rdApp.*')
 
-# Убедитесь, что этот путь корректен для вашей системы.
-BABEL_DATA_DIR = r"D:\conda\envs\ENV_5\share\openbabel"
-if not os.path.exists(BABEL_DATA_DIR):
-    print(f"[Предупреждение] Директория BABEL_DATADIR не найдена: {BABEL_DATA_DIR}")
+# Получаем путь к текущему conda-окружению из переменной среды
+conda_prefix = os.environ.get('CONDA_PREFIX')
+
+if conda_prefix:
+    # Строим правильный, кроссплатформенный путь к данным openbabel
+    babel_data_dir = Path(conda_prefix) / 'share' / 'openbabel'
+
+    if not babel_data_dir.exists():
+        print(f"[Предупреждение] Директория данных Open Babel не найдена по ожидаемому пути: {babel_data_dir}")
+    else:
+        # Устанавливаем переменную среды, чтобы openbabel нашел свои файлы
+        os.environ['BABEL_DATADIR'] = str(babel_data_dir)
+        print(f"[INFO] Переменная BABEL_DATADIR установлена в: {babel_data_dir}")
 else:
-    os.environ['BABEL_DATADIR'] = BABEL_DATA_DIR
+    print("[Предупреждение] Переменная CONDA_PREFIX не найдена. Убедитесь, что приложение запущено в активном conda-окружении.")
 
 
 DRUG_SMILES: List[str] = [
