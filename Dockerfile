@@ -1,15 +1,15 @@
 FROM mambaorg/micromamba:1.5.8-bookworm-slim AS builder
 WORKDIR /app
-COPY environment.yml requirements.txt ./
-RUN micromamba create -y -f environment.yml && \
-    micromamba run -n test /bin/bash -c "uv pip install --no-cache -r requirements.txt" && \
-    micromamba clean -afy
-FROM mambaorg/micromamba:1.5.8-bookworm-slim
 
+COPY environment.yml pyproject.toml ./
+RUN micromamba create -y -f environment.yml && \
+    micromamba run -n test /bin/bash -c "uv pip install --no-cache ." && \
+    micromamba clean -afy
+
+FROM mambaorg/micromamba:1.5.8-bookworm-slim
 ARG MAMBA_ENV_NAME=test
 ENV MAMBA_ROOT_PREFIX="/opt/conda"
 ENV PATH="${MAMBA_ROOT_PREFIX}/envs/${MAMBA_ENV_NAME}/bin:${PATH}"
-
 WORKDIR /app
 COPY --from=builder ${MAMBA_ROOT_PREFIX} ${MAMBA_ROOT_PREFIX}
 COPY . .
