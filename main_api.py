@@ -28,17 +28,14 @@ from pipeline.predict import main as run_ccgnet_prediction
 
 RDLogger.DisableLog('rdApp.*')
 
-# Получаем путь к текущему conda-окружению из переменной среды
 conda_prefix = os.environ.get('CONDA_PREFIX')
 
 if conda_prefix:
-    # Строим правильный, кроссплатформенный путь к данным openbabel
     babel_data_dir = Path(conda_prefix) / 'share' / 'openbabel'
 
     if not babel_data_dir.exists():
         print(f"[Предупреждение] Директория данных Open Babel не найдена по ожидаемому пути: {babel_data_dir}")
     else:
-        # Устанавливаем переменную среды, чтобы openbabel нашел свои файлы
         os.environ['BABEL_DATADIR'] = str(babel_data_dir)
         #print(f"[INFO] Переменная BABEL_DATADIR установлена в: {babel_data_dir}")
 else:
