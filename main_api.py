@@ -175,5 +175,5 @@ async def predict_cocrystals(request: PredictionRequest, background_tasks: Backg
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Внутренняя ошибка сервера: {e}")
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=f"Внутренняя ошибка сервера: {e}")
