@@ -5,19 +5,6 @@ import uuid
 from pathlib import Path
 from typing import List, Dict
 
-import_path = Path(__file__).parent.resolve()
-sys.path.extend([
-    str(import_path),
-    str(import_path / 'TVAE' / 'generate'),
-    os.getcwd()
-])
-from pipeline import old_module
-sys.modules['allennlp'] = sys.modules['pipeline.old_module']
-sys.modules['allennlp.modules'] = sys.modules['pipeline.old_module']
-sys.modules['allennlp.modules.feedforward'] = sys.modules['pipeline.old_module']
-sys.modules['allennlp.modules.seq2seq_encoders'] = sys.modules['pipeline.old_module']
-sys.modules['allennlp.modules.seq2seq_encoders.pytorch_seq2seq_wrapper'] = sys.modules['pipeline.old_module']
-
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse

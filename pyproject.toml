@@ -22,28 +22,29 @@ dependencies = [
     "sets==0.3.2",
     "SmilesPE==0.0.3",
     "spacy==3.7.4",
-    "torchtext==0.6.0",
     "XlsxWriter==3.2.0",
     "tensorflow==2.13.0",
     "protobuf==4.25.3",
     "urllib3==2.1.0",
-    "torchdata==0.4.1",
     "thegolem==0.4.0",
     "openpyxl==3.1.5",
     "uvicorn",
     "fastapi",
 ]
 
- [[tool.uv.index]]
- name = "pytorch-cpu"
- url = "https://download.pytorch.org/whl/cpu"
- explicit = true
-
- [tool.uv.sources]
- torch = [{ index = "pytorch-cpu" }]
- torchvision = [{ index = "pytorch-cpu" }]
+# [[tool.uv.index]]
+# name = "pytorch-cpu"
+# url = "https://download.pytorch.org/whl/cpu"
+# explicit = true
+#
+# [tool.uv.sources]
+# torch = [{ index = "pytorch-cpu" }]
+# torchvision = [{ index = "pytorch-cpu" }]
 
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]  # Искать пакеты в корневой директории
